@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Happy Father's Day</title>
+    <style>
+      :root {
+        --paper: #fbf3e7;
+        --ink: #3e2a1e;
+        --rust: #b5562e;
+        --gold: #c9933f;
+        --olive: #6b6b3a;
+        --photo-border: #e4d2b8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(
+          circle at 20% 10%,
+          #f3e3c8 0%,
+          #e9d3a8 45%,
+          #d8b97e 100%
+        );
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        padding: 32px 16px;
+      }
+
+      .card {
+        position: relative;
+        width: 700px;
+        max-width: 100%;
+        background: var(--paper);
+        border-radius: 18px;
+        padding: 48px 44px 40px;
+        box-shadow:
+          0 2px 0 rgba(255, 255, 255, 0.6) inset,
+          0 30px 60px -20px rgba(80, 50, 20, 0.45);
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border: 1.5px solid var(--gold);
+        border-radius: 10px;
+        pointer-events: none;
+        opacity: 0.55;
+      }
+
+      .deco-leaf {
+        position: absolute;
+        opacity: 0.16;
+        color: var(--olive);
+      }
+      .deco-leaf.tl {
+        top: 18px;
+        left: 18px;
+        transform: rotate(-15deg) scale(1.1);
+      }
+      .deco-leaf.br {
+        bottom: 14px;
+        right: 18px;
+        transform: rotate(165deg) scale(1.3);
+      }
+
+      .eyebrow {
+        text-align: center;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: var(--rust);
+        font-family: Georgia, serif;
+        margin-bottom: 6px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 44px;
+        line-height: 1.1;
+        margin: 0 0 4px;
+        color: var(--ink);
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--rust);
+      }
+
+      .subline {
+        text-align: center;
+        font-size: 15px;
+        color: var(--olive);
+        margin: 0 0 30px;
+        font-style: italic;
+      }
+
+      .photo-row {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 34px;
+        margin: 8px 0 30px;
+      }
+
+      .photo-slot {
+        width: 168px;
+  height: 220px;
+        border-radius: 10px;
+        border: 2.5px dashed var(--gold);
+        background: #fff8ec;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 6px 16px -8px rgba(80, 50, 20, 0.35);
+      }
+      .photo-slot:hover {
+        border-color: var(--rust);
+        transform: translateY(-2px);
+      }
+      .photo-slot.filled {
+        border-style: solid;
+        border-color: var(--photo-border);
+      }
+      .photo-slot img {
+        width: 168px;
+  height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+      .photo-slot .hint {
+        font-size: 30px;
+        color: var(--gold);
+        margin-bottom: 6px;
+      }
+      .photo-slot .label {
+        font-size: 12px;
+        color: var(--ink);
+        opacity: 0.65;
+        text-align: center;
+        padding: 0 10px;
+        font-family: Georgia, serif;
+      }
+      .photo-slot input[type="file"] {
+        display: none;
+      }
+      .remove-btn {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: rgba(62, 42, 30, 0.65);
+        color: #fff;
+        border: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 13px;
+        line-height: 1;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .photo-slot.filled .remove-btn {
+        display: flex;
+      }
+
+      .plus-divider {
+        font-size: 26px;
+        color: var(--rust);
+        opacity: 0.55;
+        margin-bottom: 14px;
+        font-family: Georgia, serif;
+      }
+
+      .photo-caption {
+        text-align: center;
+        font-size: 12.5px;
+        color: var(--ink);
+        opacity: 0.55;
+        margin-top: 8px;
+        letter-spacing: 0.04em;
+      }
+
+      .message {
+        font-size: 16.5px;
+        line-height: 1.75;
+        color: var(--ink);
+        text-align: center;
+        max-width: 540px;
+        margin: 0 auto 26px;
+        outline: none;
+        border-radius: 8px;
+        padding: 6px 8px;
+      }
+      .message:focus {
+        box-shadow: 0 0 0 2px var(--gold);
+        background: rgba(201, 147, 63, 0.06);
+      }
+
+      .signoff {
+        text-align: center;
+        font-size: 17px;
+        color: var(--rust);
+        font-style: italic;
+        margin-bottom: 4px;
+        outline: none;
+        border-radius: 6px;
+      }
+      .signoff:focus {
+        box-shadow: 0 0 0 2px var(--gold);
+      }
+
+      .divider {
+        width: 70px;
+        height: 2px;
+        background: var(--gold);
+        opacity: 0.5;
+        margin: 22px auto;
+        border-radius: 2px;
+      }
+
+      .editable-hint {
+        text-align: center;
+        font-size: 11.5px;
+        color: var(--olive);
+        opacity: 0.7;
+        margin-top: 6px;
+      }
+
+      .toolbar {
+        width: 700px;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      .toolbar button {
+        font-family: Georgia, serif;
+        font-size: 13px;
+        background: var(--ink);
+        color: var(--paper);
+        border: none;
+        padding: 10px 22px;
+        border-radius: 999px;
+        cursor: pointer;
+        letter-spacing: 0.03em;
+      }
+      .toolbar button:hover {
+        background: var(--rust);
+      }
+
+      [contenteditable="true"]:empty:before {
+        content: attr(data-placeholder);
+        color: rgba(62, 42, 30, 0.4);
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          padding: 34px 20px 28px;
+        }
+        h1 {
+          font-size: 32px;
+        }
+        .photo-slot {
+          width: 120px;
+          height: 120px;
+        }
+        .photo-row {
+          gap: 20px;
+        }
+      }
+
+      @media print {
+        body {
+          background: var(--paper);
+          padding: 0;
+        }
+        .toolbar {
+          display: none;
+        }
+        .photo-slot {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="card" id="card">
+        <svg
+          class="deco-leaf tl"
+          width="60"
+          height="60"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 2C7 2 3 6 3 11c0 5 4 9 9 11 5-2 9-6 9-11 0-5-4-9-9-9z" />
+        </svg>
+        <svg
+          class="deco-leaf br"
+          width="70"
+          height="70"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 2C7 2 3 6 3 11c0 5 4 9 9 11 5-2 9-6 9-11 0-5-4-9-9-9z" />
+        </svg>
+
+        <div class="eyebrow">With Love, Today &amp; Always</div>
+        <h1>Happy Father&rsquo;s <em>Day</em></h1>
+        <div class="subline">a little card, for the biggest hero</div>
+
+        <div class="photo-row">
+          <div>
+            <label class="photo-slot filled" id="slot1">
+              <img src="38960.jpg" alt="Dad" />
+              <span class="hint" style="display: none">📷</span>
+              <span class="label" style="display: none">Dad's photo</span>
+              <input
+                type="file"
+                accept="image/*"
+                onchange="loadPhoto(event, 'slot1')"
+              />
+            </label>
+            <div class="photo-caption"></div>
+          </div>
+          <div class="plus-divider">&amp;</div>
+          <div>
+            <label class="photo-slot filled" id="slot2">
+              <img src="38959.jpg" alt="Dad" />
+              <span class="hint" style="display: none">📷</span>
+              <span class="label" style="display: none">Dad's photo</span>
+              <input
+                type="file"
+                accept="image/*"
+                onchange="loadPhoto(event, 'slot2')"
+              />
+            </label>
+            <div class="photo-caption"></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div
+          class="message"
+          contenteditable="true"
+          data-placeholder="Write your message here..."
+        >
+          Dad, thank you for every quiet sacrifice, every late night, and every
+          time you showed up without needing to be asked. The way you carry our
+          family is something I've never taken for granted. I hope today gives
+          you even a small piece of the love and rest you give all of us, every
+          single day.
+        </div>
+
+        <div
+          class="signoff"
+          contenteditable="true"
+          data-placeholder="Your name"
+        >
+          With all my love, [Zahra]
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button onclick="window.print()">Save / Print Card</button>
+      </div>
+      <div class="editable-hint">
+        Click a square to add a photo &middot; click the message to edit it
+        &middot; "Save / Print" to save as PDF
+      </div>
+    </div>
+
+    <script>
+      function loadPhoto(event, slotId) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const slot = document.getElementById(slotId);
+          slot.classList.add("filled");
+          slot.querySelector(".hint").style.display = "none";
+          slot.querySelector(".label").style.display = "none";
+          let img = slot.querySelector("img");
+          if (!img) {
+            img = document.createElement("img");
+            slot.insertBefore(img, slot.querySelector("input"));
+          }
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function removePhoto(event, slotId) {
+        event.preventDefault();
+        event.stopPropagation();
+        const slot = document.getElementById(slotId);
+        const img = slot.querySelector("img");
+        if (img) img.remove();
+        slot.classList.remove("filled");
+        slot.querySelector(".hint").style.display = "";
+        slot.querySelector(".label").style.display = "";
+        slot.querySelector("input").value = "";
+      }
+    </script>
+  </body>
+</html>
